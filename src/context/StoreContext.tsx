@@ -1,14 +1,34 @@
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect, type ReactElement } from 'react';
 import { getProducts, getProductById } from '../services/api';
 
 export const StoreContext = createContext(null);
 
-export function StoreProvider({ children }) {
-  const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState([]);
+interface Icategory{
+			id: number,
+			name: string,
+			slug: string,
+			image: string,
+			creationAt: string,
+			updatedAt: string
+		}
+
+interface Iproduct	{
+		id: number,
+		title: string,
+		slug: string,
+	  price: number,
+		description:string,
+		category: Icategory,
+		images: string[],
+		creationAt: string,
+		updatedAt: string
+	}
+
+export function StoreProvider({ children }:{children:ReactElement}) {
+  const [products, setProducts] = useState<Iproduct[]>([]);
+  const [cart, setCart] = useState<Iproduct[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Carrega os produtos assim que o app abre
   useEffect(() => {
     async function loadData() {
       const data = await getProducts();
@@ -18,12 +38,17 @@ export function StoreProvider({ children }) {
     loadData();
   }, []);
 
-  const addToCart = (product) => {
+  const addToCart = (product:Iproduct) => {
     setCart([...cart, product]);
   };
 
-  const removeFromCart = (id) => {
-    setCart(cart.filter(item => item.id !== id));
+  const removeFromCart = (id:number) => {
+    const productIndex = cart.findIndex(item => item.id === id);
+    if(productIndex !== -1){
+      const newCart = [...cart];
+      newCart.splice(productIndex, 1);
+      setCart(newCart);
+    }
   };
 
   return (
@@ -33,7 +58,7 @@ export function StoreProvider({ children }) {
       loading, 
       addToCart, 
       removeFromCart,
-      getProductById // Você pode passar a função da API direto
+      getProductById
     }}>
       {children}
     </StoreContext.Provider>
