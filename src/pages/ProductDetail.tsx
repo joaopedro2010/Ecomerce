@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const ProductDetail = ({ ...props }) => {
+const ProductDetail = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedImage, setSelectedImage] = useState(0);
   const [activeTab, setActiveTab] = useState('description');
@@ -10,19 +10,16 @@ const ProductDetail = ({ ...props }) => {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     alert(`Buscando por: ${searchTerm}`);
-    // Aqui você pode implementar a navegação ou filtro real
   };
 
   const handleCalculateShipping = () => {
     if (cep.length === 8) {
       alert(`Calculando frete para o CEP: ${cep}`);
-      // Aqui você pode fazer uma chamada API real
     } else {
       alert('Por favor, digite um CEP válido com 8 dígitos');
     }
   };
 
-  // Simulando imagens do produto (substitua por imagens reais)
   const productImages = [
     'https://via.placeholder.com/800x800/0054A6/FFFFFF?text=Produto+Principal',
     'https://via.placeholder.com/800x800/003D7A/FFFFFF?text=Angulo+2',
@@ -30,67 +27,67 @@ const ProductDetail = ({ ...props }) => {
     'https://via.placeholder.com/800x800/001D4A/FFFFFF?text=Detalhe'
   ];
 
+  const menuCategories = ['TODOS OS DEPARTAMENTOS', 'HARDWARE', 'PERIFÉRICOS', 'COMPUTADORES', 'MONITORES', 'GAMER'];
+  
+  const specsData = [
+    ['Marca', 'NVIDIA'],
+    ['Modelo', 'GeForce RTX 4070 Super'],
+    ['Memória', '12GB GDDR6X'],
+    ['Interface', 'PCI Express 4.0 x16'],
+    ['Clock Base', '1980 MHz'],
+    ['Clock Boost', '2505 MHz'],
+    ['CUDA Cores', '7168'],
+    ['Ray Tracing Cores', '3ª Geração'],
+    ['Tensor Cores', '4ª Geração'],
+    ['Resolução Máxima', '7680 x 4320 (8K)'],
+    ['Conexões', '3x DisplayPort 1.4a, 1x HDMI 2.1a'],
+    ['Fonte Recomendada', '650W'],
+    ['Dimensões', '261 x 126 x 50 mm']
+  ];
+
+  const relatedProducts = [
+    { name: 'RTX 4060 Ti', price: '2.599,90' },
+    { name: 'RTX 4080 Super', price: '5.999,90' },
+    { name: 'RX 7800 XT', price: '3.299,90' },
+    { name: 'RTX 4090', price: '10.999,90' }
+  ];
+
+  const features = [
+    'Arquitetura NVIDIA Ada Lovelace',
+    '12GB GDDR6X de memória',
+    'DLSS 3.0 para performance otimizada',
+    'Ray Tracing para gráficos realistas',
+    'Windforce Cooling System',
+    'RGB Fusion 2.0'
+  ];
+
   return (
-    <div {...props} style={{ backgroundColor: '#FFFFFF', minHeight: '100vh', fontFamily: 'Arial, sans-serif' }}>
-      {/* Header Azul Funcional */}
-      <div style={{ backgroundColor: '#0054A6', padding: '12px 0' }}>
-        <header style={{ 
-          display: 'flex', 
-          alignItems: 'center', 
-          justifyContent: 'space-between',
-          gap: '20px', 
-          padding: '0 20px', 
-          maxWidth: '1400px', 
-          margin: '0 auto' 
-        }}>
-          {/* Logo clicável */}
-          <a href="/" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}>
+    <div className="min-h-screen bg-white font-sans">
+      {/* Header Azul */}
+      <div className="bg-[#0054A6] py-3">
+        <header className="flex items-center justify-between gap-5 px-5 max-w-[1400px] mx-auto">
+          {/* Logo */}
+          <a href="/" className="flex items-center gap-2.5 no-underline">
             <img 
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRF8YkrnJ6porS4ntTa0MJmS_PnRnTa2o3Fg&s" 
               alt="Logo FuFuni"
-              style={{ width: '50px', height: '50px', objectFit: 'contain', filter: 'brightness(0) invert(1)' }}
+              className="w-[50px] h-[50px] object-contain brightness-0 invert"
             />
-            <h1 style={{ fontSize: '28px', fontWeight: 'bold', color: '#FFFFFF', margin: 0 }}>FuFuni</h1>
+            <h1 className="text-[28px] font-bold text-white m-0">FuFuni</h1>
           </a>
 
-          {/* Barra de Pesquisa Funcional */}
-          <form onSubmit={handleSearch} style={{ 
-            flex: 1, 
-            maxWidth: '600px',
-            display: 'flex',
-            alignItems: 'center',
-            background: '#FFFFFF',
-            borderRadius: '4px',
-            overflow: 'hidden',
-            boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-          }}>
+          {/* Barra de Pesquisa */}
+          <form onSubmit={handleSearch} className="flex-1 max-w-[600px] flex items-center bg-white rounded overflow-hidden shadow-sm">
             <input 
               type="text" 
               placeholder="Buscar produtos, marcas e muito mais..." 
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              style={{ 
-                flex: 1,
-                padding: '14px 20px',
-                border: 'none',
-                outline: 'none',
-                fontSize: '15px'
-              }} 
+              className="flex-1 py-3.5 px-5 border-none outline-none text-[15px]"
             />
             <button 
               type="submit"
-              style={{ 
-                background: '#FF6500',
-                border: 'none',
-                padding: '14px 25px',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                transition: 'background 0.3s'
-              }}
-              onMouseEnter={(e) => e.currentTarget.style.background = '#E55A00'}
-              onMouseLeave={(e) => e.currentTarget.style.background = '#FF6500'}
+              className="bg-[#FF6500] border-none py-3.5 px-6 cursor-pointer flex items-center justify-center transition-colors hover:bg-[#E55A00]"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2">
                 <circle cx="11" cy="11" r="8"></circle>
@@ -99,80 +96,43 @@ const ProductDetail = ({ ...props }) => {
             </button>
           </form>
 
-          {/* Ícones de Usuário e Configurações Funcionais */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-            {/* Ícone de Usuário com Menu Dropdown */}
-            <div style={{ position: 'relative' }}>
+          {/* Ícones de Usuário e Configurações */}
+          <div className="flex items-center gap-[15px]">
+            {/* Menu Dropdown Usuário */}
+            <div className="relative">
               <button 
                 onClick={() => setShowUserMenu(!showUserMenu)}
-                style={{ 
-                  background: 'none', 
-                  border: 'none', 
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  color: '#FFFFFF',
-                  padding: '8px 12px',
-                  borderRadius: '4px',
-                  transition: 'background 0.3s'
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
-                onMouseLeave={(e) => e.currentTarget.style.background = 'none'}
+                className="bg-transparent border-none cursor-pointer flex items-center gap-2 text-white py-2 px-3 rounded transition-colors hover:bg-white/10"
               >
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2">
                   <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                   <circle cx="12" cy="7" r="4"></circle>
                 </svg>
-                <span style={{ fontSize: '14px' }}>Minha Conta</span>
+                <span className="text-sm">Minha Conta</span>
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2">
                   <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>
               </button>
 
-              {/* Dropdown Menu */}
               {showUserMenu && (
-                <div style={{
-                  position: 'absolute',
-                  top: '100%',
-                  right: 0,
-                  marginTop: '8px',
-                  background: '#FFFFFF',
-                  borderRadius: '8px',
-                  boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
-                  minWidth: '200px',
-                  zIndex: 1000,
-                  overflow: 'hidden'
-                }}>
-                  <a href="/login" style={{ display: 'block', padding: '12px 20px', color: '#333', textDecoration: 'none', borderBottom: '1px solid #F0F0F0' }}>
+                <div className="absolute top-full right-0 mt-2 bg-white rounded-lg shadow-xl min-w-[200px] z-[1000] overflow-hidden">
+                  <a href="/login" className="block px-5 py-3 text-[#333] no-underline border-b border-[#F0F0F0] hover:bg-gray-50">
                     Entrar / Cadastrar
                   </a>
-                  <a href="/orders" style={{ display: 'block', padding: '12px 20px', color: '#333', textDecoration: 'none', borderBottom: '1px solid #F0F0F0' }}>
+                  <a href="/orders" className="block px-5 py-3 text-[#333] no-underline border-b border-[#F0F0F0] hover:bg-gray-50">
                     Meus Pedidos
                   </a>
-                  <a href="/wishlist" style={{ display: 'block', padding: '12px 20px', color: '#333', textDecoration: 'none' }}>
+                  <a href="/wishlist" className="block px-5 py-3 text-[#333] no-underline hover:bg-gray-50">
                     Lista de Desejos
                   </a>
                 </div>
               )}
             </div>
 
-            {/* Ícone de Configurações */}
+            {/* Configurações */}
             <button 
               onClick={() => alert('Configurações')}
-              style={{ 
-                background: 'none', 
-                border: 'none', 
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: '8px',
-                borderRadius: '4px',
-                transition: 'background 0.3s'
-              }}
-              onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
-              onMouseLeave={(e) => e.currentTarget.style.background = 'none'}
+              className="bg-transparent border-none cursor-pointer flex items-center justify-center p-2 rounded transition-colors hover:bg-white/10"
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2">
                 <circle cx="12" cy="12" r="3"></circle>
@@ -183,66 +143,29 @@ const ProductDetail = ({ ...props }) => {
             {/* Carrinho */}
             <button 
               onClick={() => alert('Carrinho de compras')}
-              style={{ 
-                background: 'none', 
-                border: 'none', 
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: '8px',
-                borderRadius: '4px',
-                position: 'relative'
-              }}
+              className="bg-transparent border-none cursor-pointer flex items-center justify-center p-2 rounded relative"
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2">
                 <circle cx="9" cy="21" r="1"></circle>
                 <circle cx="20" cy="21" r="1"></circle>
                 <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
               </svg>
-              <span style={{
-                position: 'absolute',
-                top: '0',
-                right: '0',
-                background: '#FF6500',
-                color: '#FFFFFF',
-                fontSize: '10px',
-                fontWeight: 'bold',
-                width: '16px',
-                height: '16px',
-                borderRadius: '50%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}>0</span>
+              <span className="absolute top-0 right-0 bg-[#FF6500] text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                0
+              </span>
             </button>
           </div>
         </header>
       </div>
 
       {/* Menu de Categorias */}
-      <div style={{ backgroundColor: '#003D7A', padding: '8px 0' }}>
-        <div style={{ 
-          maxWidth: '1400px', 
-          margin: '0 auto', 
-          padding: '0 20px',
-          display: 'flex',
-          gap: '30px'
-        }}>
-          {['TODOS OS DEPARTAMENTOS', 'HARDWARE', 'PERIFÉRICOS', 'COMPUTADORES', 'MONITORES', 'GAMER'].map((category) => (
+      <div className="bg-[#003D7A] py-2">
+        <div className="max-w-[1400px] mx-auto px-5 flex gap-[30px]">
+          {menuCategories.map((category) => (
             <a 
               key={category}
               href={`/category/${category.toLowerCase().replace(/ /g, '-')}`}
-              style={{ 
-                color: '#FFFFFF', 
-                fontSize: '13px', 
-                fontWeight: category === 'TODOS OS DEPARTAMENTOS' ? 'bold' : 'normal',
-                cursor: 'pointer',
-                textDecoration: 'none',
-                transition: 'opacity 0.3s'
-              }}
-              onMouseEnter={(e) => e.currentTarget.style.opacity = '0.8'}
-              onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
+              className={`text-white text-[13px] cursor-pointer no-underline transition-opacity hover:opacity-80 ${category === 'TODOS OS DEPARTAMENTOS' ? 'font-bold' : 'font-normal'}`}
             >
               {category}
             </a>
@@ -250,95 +173,52 @@ const ProductDetail = ({ ...props }) => {
         </div>
       </div>
 
-      <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '20px' }}>
+      {/* Conteúdo Principal */}
+      <div className="max-w-[1400px] mx-auto p-5">
         {/* Breadcrumb */}
-        <div style={{ marginBottom: '20px', color: '#666', fontSize: '14px' }}>
-          <a href="/" style={{ color: '#0054A6', textDecoration: 'none' }}>Home</a>
-          <span style={{ margin: '0 8px', color: '#999' }}>›</span>
-          <a href="/hardware" style={{ color: '#0054A6', textDecoration: 'none' }}>Hardware</a>
-          <span style={{ margin: '0 8px', color: '#999' }}>›</span>
-          <a href="/hardware/placas-de-video" style={{ color: '#0054A6', textDecoration: 'none' }}>Placas de Vídeo</a>
-          <span style={{ margin: '0 8px', color: '#999' }}>›</span>
-          <span style={{ color: '#666' }}>NVIDIA GeForce</span>
+        <div className="mb-5 text-[#666] text-sm">
+          <a href="/" className="text-[#0054A6] no-underline">Home</a>
+          <span className="mx-2 text-[#999]">›</span>
+          <a href="/hardware" className="text-[#0054A6] no-underline">Hardware</a>
+          <span className="mx-2 text-[#999]">›</span>
+          <a href="/hardware/placas-de-video" className="text-[#0054A6] no-underline">Placas de Vídeo</a>
+          <span className="mx-2 text-[#999]">›</span>
+          <span className="text-[#666]">NVIDIA GeForce</span>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr 0.8fr', gap: '30px', marginBottom: '40px' }}>
-          {/* Coluna Esquerda - Galeria MAIOR */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-            {/* Imagem Principal Grande */}
-            <div style={{ 
-              border: '1px solid #E0E0E0', 
-              borderRadius: '12px', 
-              overflow: 'hidden', 
-              background: '#FAFAFA',
-              position: 'relative',
-              cursor: 'zoom-in'
-            }}>
+        {/* Grid Principal */}
+        <div className="grid grid-cols-[1.2fr_1fr_0.8fr] gap-[30px] mb-10">
+          {/* Coluna Esquerda - Galeria */}
+          <div className="flex flex-col gap-[15px]">
+            {/* Imagem Principal */}
+            <div className="border border-[#E0E0E0] rounded-xl overflow-hidden bg-[#FAFAFA] relative cursor-zoom-in">
               <img 
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbh-9TjFWygGftURFCV5XVbj7Gh5uEF-gBOw&s"
                 alt="Produto"
-                style={{ 
-                  width: '100%', 
-                  height: 'auto',
-                  aspectRatio: '1',
-                  objectFit: 'cover',
-                  display: 'block'
-                }}
+                className="w-full aspect-square object-cover block"
                 onClick={() => alert('Zoom na imagem')}
               />
-              {/* Badge de desconto */}
-              <div style={{
-                position: 'absolute',
-                top: '15px',
-                left: '15px',
-                background: '#FF6500',
-                color: '#FFFFFF',
-                padding: '5px 10px',
-                borderRadius: '4px',
-                fontWeight: 'bold',
-                fontSize: '14px'
-              }}>
+              <div className="absolute top-[15px] left-[15px] bg-[#FF6500] text-white px-2.5 py-1.5 rounded font-bold text-sm">
                 -15%
               </div>
             </div>
 
             {/* Miniaturas */}
-            <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
+            <div className="flex gap-2.5 justify-center">
               {productImages.map((img, index) => (
                 <div 
                   key={index}
                   onClick={() => setSelectedImage(index)}
-                  style={{ 
-                    width: '80px', 
-                    height: '80px', 
-                    border: selectedImage === index ? '2px solid #0054A6' : '1px solid #E0E0E0', 
-                    borderRadius: '8px', 
-                    overflow: 'hidden', 
-                    cursor: 'pointer',
-                    transition: 'all 0.3s',
-                    opacity: selectedImage === index ? '1' : '0.7'
-                  }}
-                  onMouseEnter={(e) => {
-                    if (selectedImage !== index) {
-                      e.currentTarget.style.opacity = '1';
-                      e.currentTarget.style.borderColor = '#0054A6';
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (selectedImage !== index) {
-                      e.currentTarget.style.opacity = '0.7';
-                      e.currentTarget.style.borderColor = '#E0E0E0';
-                    }
-                  }}
+                  className={`w-20 h-20 rounded-lg overflow-hidden cursor-pointer transition-all ${
+                    selectedImage === index 
+                      ? 'border-2 border-[#0054A6] opacity-100' 
+                      : 'border border-[#E0E0E0] opacity-70 hover:opacity-100 hover:border-[#0054A6]'
+                  }`}
                 >
                   <img 
                     src={img} 
                     alt={`Produto ${index + 1}`}
-                    style={{ 
-                      width: '100%', 
-                      height: '100%', 
-                      objectFit: 'cover'
-                    }}
+                    className="w-full h-full object-cover"
                   />
                 </div>
               ))}
@@ -346,34 +226,32 @@ const ProductDetail = ({ ...props }) => {
           </div>
 
           {/* Coluna Central - Informações */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-            <h2 style={{ fontSize: '24px', fontWeight: 600, color: '#333333', lineHeight: '1.3' }}>
+          <div className="flex flex-col gap-[15px]">
+            <h2 className="text-2xl font-semibold text-[#333] leading-tight">
               Placa de Vídeo NVIDIA GeForce RTX 4070 Super Windforce, 12GB GDDR6X, DLSS 3.0, Ray Tracing
             </h2>
             
-            <div style={{ color: '#666666', fontSize: '14px' }}>
-              Código: <span style={{ fontWeight: 'bold', color: '#333' }}>RTX4070-SUPER-WF</span>
+            <div className="text-[#666] text-sm">
+              Código: <span className="font-bold text-[#333]">RTX4070-SUPER-WF</span>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <div style={{ color: '#FFB300', fontSize: '20px' }}>
-                ★★★★☆
-              </div>
-              <span style={{ color: '#0054A6', fontSize: '14px' }}>(128 avaliações)</span>
+            <div className="flex items-center gap-2.5">
+              <div className="text-[#FFB300] text-xl">★★★★☆</div>
+              <span className="text-[#0054A6] text-sm">(128 avaliações)</span>
             </div>
 
             {/* Preço */}
-            <div style={{ background: '#F8F9FA', padding: '25px', borderRadius: '12px' }}>
-              <div style={{ color: '#999999', textDecoration: 'line-through', fontSize: '16px', marginBottom: '8px' }}>
+            <div className="bg-[#F8F9FA] p-6 rounded-xl">
+              <div className="text-[#999] line-through text-base mb-2">
                 De: R$ 3.999,90
               </div>
-              <div style={{ fontSize: '36px', fontWeight: 'bold', color: '#0054A6', marginBottom: '8px' }}>
+              <div className="text-4xl font-bold text-[#0054A6] mb-2">
                 R$ 3.399,90
               </div>
-              <div style={{ color: '#333333', fontSize: '18px', marginBottom: '15px' }}>
+              <div className="text-[#333] text-lg mb-4">
                 12x de R$ 283,32 sem juros
               </div>
-              <div style={{ paddingTop: '15px', borderTop: '1px solid #E0E0E0', color: '#666666', display: 'flex', gap: '10px' }}>
+              <div className="pt-4 border-t border-[#E0E0E0] text-[#666] flex gap-2.5">
                 <span>💰 Pix: -5%</span>
                 <span>💳 Cartão</span>
                 <span>📄 Boleto</span>
@@ -382,150 +260,85 @@ const ProductDetail = ({ ...props }) => {
 
             <button 
               onClick={() => alert('Produto adicionado ao carrinho!')}
-              style={{ 
-                background: '#0054A6', 
-                color: 'white', 
-                border: 'none', 
-                padding: '18px', 
-                borderRadius: '12px', 
-                fontSize: '20px', 
-                fontWeight: 'bold', 
-                cursor: 'pointer',
-                transition: 'background 0.3s, transform 0.1s',
-                boxShadow: '0 4px 15px rgba(0,84,166,0.3)'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = '#003D7A';
-                e.currentTarget.style.transform = 'translateY(-1px)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = '#0054A6';
-                e.currentTarget.style.transform = 'translateY(0)';
-              }}
+              className="bg-[#0054A6] text-white border-none py-[18px] rounded-xl text-xl font-bold cursor-pointer transition-all hover:bg-[#003D7A] hover:-translate-y-px shadow-[0_4px_15px_rgba(0,84,166,0.3)]"
             >
               COMPRAR AGORA
             </button>
 
-            <div style={{ display: 'flex', gap: '20px', marginTop: '10px', color: '#666666', fontSize: '14px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer' }}
-                   onClick={() => alert('Calcular frete')}>
+            <div className="flex gap-5 mt-2.5 text-[#666] text-sm">
+              <div className="flex items-center gap-1.5 cursor-pointer" onClick={() => alert('Calcular frete')}>
                 📦 Calcular Frete
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer' }}
-                   onClick={() => alert('Garantia estendida')}>
+              <div className="flex items-center gap-1.5 cursor-pointer" onClick={() => alert('Garantia estendida')}>
                 🛡️ Garantia Estendida
               </div>
             </div>
           </div>
 
           {/* Coluna Direita - Sidebar */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            <div style={{ background: '#F8F9FA', padding: '20px', borderRadius: '12px' }}>
-              <h3 style={{ fontSize: '14px', color: '#666666', marginBottom: '10px' }}>Vendido e entregue por</h3>
-              <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#333333', marginBottom: '15px' }}>FuFuni</div>
-              <div style={{ 
-                padding: '8px 12px', 
-                background: '#E8F5E9', 
-                color: '#2E7D32', 
-                borderRadius: '8px',
-                fontWeight: 'bold',
-                fontSize: '14px',
-                display: 'inline-block'
-              }}>
+          <div className="flex flex-col gap-5">
+            <div className="bg-[#F8F9FA] p-5 rounded-xl">
+              <h3 className="text-sm text-[#666] mb-2.5">Vendido e entregue por</h3>
+              <div className="text-lg font-bold text-[#333] mb-4">FuFuni</div>
+              <div className="inline-block px-3 py-2 bg-[#E8F5E9] text-[#2E7D32] rounded-lg font-bold text-sm">
                 ✓ Em Estoque
               </div>
             </div>
 
-            <div style={{ background: '#F8F9FA', padding: '20px', borderRadius: '12px' }}>
-              <h3 style={{ fontSize: '16px', color: '#333333', marginBottom: '15px' }}>Calcular Frete</h3>
-              <div style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}>
+            <div className="bg-[#F8F9FA] p-5 rounded-xl">
+              <h3 className="text-base text-[#333] mb-4">Calcular Frete</h3>
+              <div className="flex gap-2.5 mb-2.5">
                 <input 
                   type="text" 
                   placeholder="Digite seu CEP" 
                   value={cep}
                   onChange={(e) => setCep(e.target.value)}
                   maxLength={8}
-                  style={{ 
-                    flex: 1, 
-                    padding: '12px', 
-                    border: '1px solid #CCCCCC', 
-                    borderRadius: '8px', 
-                    fontSize: '14px' 
-                  }} 
+                  className="flex-1 p-3 border border-[#CCC] rounded-lg text-sm"
                 />
                 <button 
                   onClick={handleCalculateShipping}
-                  style={{ 
-                    padding: '12px 20px', 
-                    background: '#0054A6', 
-                    color: 'white', 
-                    border: 'none', 
-                    borderRadius: '8px', 
-                    cursor: 'pointer',
-                    fontWeight: 'bold',
-                    transition: 'background 0.3s'
-                  }}
-                  onMouseEnter={(e) => e.currentTarget.style.background = '#003D7A'}
-                  onMouseLeave={(e) => e.currentTarget.style.background = '#0054A6'}
+                  className="px-5 py-3 bg-[#0054A6] text-white border-none rounded-lg cursor-pointer font-bold transition-colors hover:bg-[#003D7A]"
                 >
                   OK
                 </button>
               </div>
-              <a href="https://buscacepinter.correios.com.br" target="_blank" style={{ color: '#0054A6', fontSize: '12px', textDecoration: 'none' }}>
+              <a href="https://buscacepinter.correios.com.br" target="_blank" className="text-[#0054A6] text-xs no-underline">
                 Não sei meu CEP
               </a>
             </div>
           </div>
         </div>
 
-        {/* Abas Funcionais */}
-        <div style={{ display: 'flex', borderBottom: '2px solid #E0E0E0', marginBottom: '30px' }}>
+        {/* Abas */}
+        <div className="flex border-b-2 border-[#E0E0E0] mb-[30px]">
           <button 
             onClick={() => setActiveTab('description')}
-            style={{ 
-              padding: '15px 30px', 
-              background: 'none', 
-              border: 'none', 
-              fontSize: '16px', 
-              color: activeTab === 'description' ? '#0054A6' : '#666666', 
-              cursor: 'pointer',
-              position: 'relative',
-              fontWeight: activeTab === 'description' ? 'bold' : 'normal',
-              borderBottom: activeTab === 'description' ? '2px solid #0054A6' : 'none',
-              marginBottom: '-2px'
-            }}
+            className={`px-[30px] py-[15px] bg-transparent border-none text-base cursor-pointer relative -mb-[2px] ${
+              activeTab === 'description' 
+                ? 'text-[#0054A6] font-bold border-b-2 border-[#0054A6]' 
+                : 'text-[#666] font-normal'
+            }`}
           >
             Descrição
           </button>
           <button 
             onClick={() => setActiveTab('specs')}
-            style={{ 
-              padding: '15px 30px', 
-              background: 'none', 
-              border: 'none', 
-              fontSize: '16px', 
-              color: activeTab === 'specs' ? '#0054A6' : '#666666', 
-              cursor: 'pointer',
-              fontWeight: activeTab === 'specs' ? 'bold' : 'normal',
-              borderBottom: activeTab === 'specs' ? '2px solid #0054A6' : 'none',
-              marginBottom: '-2px'
-            }}
+            className={`px-[30px] py-[15px] bg-transparent border-none text-base cursor-pointer -mb-[2px] ${
+              activeTab === 'specs' 
+                ? 'text-[#0054A6] font-bold border-b-2 border-[#0054A6]' 
+                : 'text-[#666] font-normal'
+            }`}
           >
             Especificações Técnicas
           </button>
           <button 
             onClick={() => setActiveTab('reviews')}
-            style={{ 
-              padding: '15px 30px', 
-              background: 'none', 
-              border: 'none', 
-              fontSize: '16px', 
-              color: activeTab === 'reviews' ? '#0054A6' : '#666666', 
-              cursor: 'pointer',
-              fontWeight: activeTab === 'reviews' ? 'bold' : 'normal',
-              borderBottom: activeTab === 'reviews' ? '2px solid #0054A6' : 'none',
-              marginBottom: '-2px'
-            }}
+            className={`px-[30px] py-[15px] bg-transparent border-none text-base cursor-pointer -mb-[2px] ${
+              activeTab === 'reviews' 
+                ? 'text-[#0054A6] font-bold border-b-2 border-[#0054A6]' 
+                : 'text-[#666] font-normal'
+            }`}
           >
             Avaliações
           </button>
@@ -533,25 +346,18 @@ const ProductDetail = ({ ...props }) => {
 
         {/* Conteúdo das Abas */}
         {activeTab === 'description' && (
-          <div style={{ marginBottom: '40px' }}>
-            <h2 style={{ fontSize: '20px', color: '#333333', marginBottom: '20px' }}>Descrição do Produto</h2>
-            <p style={{ lineHeight: '1.8', color: '#666', marginBottom: '20px' }}>
+          <div className="mb-10">
+            <h2 className="text-xl text-[#333] mb-5">Descrição do Produto</h2>
+            <p className="leading-relaxed text-[#666] mb-5">
               A Placa de Vídeo NVIDIA GeForce RTX 4070 Super é a escolha definitiva para gamers e criadores de conteúdo que buscam performance excepcional. 
               Equipada com a arquitetura Ada Lovelace, 12GB de memória GDDR6X e tecnologias como DLSS 3.0 e Ray Tracing, ela oferece gráficos 
               impressionantes e taxas de quadros ultra-elevadas em resolução 4K.
             </p>
             
-            <h3 style={{ fontSize: '18px', color: '#333333', marginBottom: '15px' }}>Principais Características:</h3>
-            <ul style={{ listStyle: 'none', padding: 0 }}>
-              {[
-                'Arquitetura NVIDIA Ada Lovelace',
-                '12GB GDDR6X de memória',
-                'DLSS 3.0 para performance otimizada',
-                'Ray Tracing para gráficos realistas',
-                'Windforce Cooling System',
-                'RGB Fusion 2.0'
-              ].map((feature, index) => (
-                <li key={index} style={{ padding: '8px 0', color: '#666666', fontSize: '15px' }}>
+            <h3 className="text-lg text-[#333] mb-4">Principais Características:</h3>
+            <ul className="list-none p-0">
+              {features.map((feature, index) => (
+                <li key={index} className="py-2 text-[#666] text-[15px]">
                   ✓ {feature}
                 </li>
               ))}
@@ -560,28 +366,14 @@ const ProductDetail = ({ ...props }) => {
         )}
 
         {activeTab === 'specs' && (
-          <div style={{ marginBottom: '40px' }}>
-            <h2 style={{ fontSize: '20px', color: '#333333', marginBottom: '20px' }}>Especificações Técnicas</h2>
-            <table style={{ width: '100%', borderCollapse: 'collapse', background: '#FAFAFA', borderRadius: '12px', overflow: 'hidden' }}>
+          <div className="mb-10">
+            <h2 className="text-xl text-[#333] mb-5">Especificações Técnicas</h2>
+            <table className="w-full border-collapse bg-[#FAFAFA] rounded-xl overflow-hidden">
               <tbody>
-                {[
-                  ['Marca', 'NVIDIA'],
-                  ['Modelo', 'GeForce RTX 4070 Super'],
-                  ['Memória', '12GB GDDR6X'],
-                  ['Interface', 'PCI Express 4.0 x16'],
-                  ['Clock Base', '1980 MHz'],
-                  ['Clock Boost', '2505 MHz'],
-                  ['CUDA Cores', '7168'],
-                  ['Ray Tracing Cores', '3ª Geração'],
-                  ['Tensor Cores', '4ª Geração'],
-                  ['Resolução Máxima', '7680 x 4320 (8K)'],
-                  ['Conexões', '3x DisplayPort 1.4a, 1x HDMI 2.1a'],
-                  ['Fonte Recomendada', '650W'],
-                  ['Dimensões', '261 x 126 x 50 mm']
-                ].map(([label, value], index) => (
-                  <tr key={index} style={{ background: index % 2 === 0 ? '#FFFFFF' : '#F5F5F5' }}>
-                    <td style={{ padding: '12px 20px', fontWeight: 600, color: '#333333', width: '40%' }}>{label}</td>
-                    <td style={{ padding: '12px 20px', color: '#666666' }}>{value}</td>
+                {specsData.map(([label, value], index) => (
+                  <tr key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-[#F5F5F5]'}>
+                    <td className="py-3 px-5 font-semibold text-[#333] w-[40%]">{label}</td>
+                    <td className="py-3 px-5 text-[#666]">{value}</td>
                   </tr>
                 ))}
               </tbody>
@@ -590,23 +382,15 @@ const ProductDetail = ({ ...props }) => {
         )}
 
         {activeTab === 'reviews' && (
-          <div style={{ marginBottom: '40px' }}>
-            <h2 style={{ fontSize: '20px', color: '#333333', marginBottom: '20px' }}>Avaliações dos Clientes</h2>
-            <div style={{ background: '#F8F9FA', padding: '30px', borderRadius: '12px', textAlign: 'center' }}>
-              <div style={{ fontSize: '48px', marginBottom: '10px' }}>⭐</div>
-              <p style={{ fontSize: '18px', color: '#666' }}>Nenhuma avaliação ainda.</p>
-              <p style={{ color: '#999', marginBottom: '20px' }}>Seja o primeiro a avaliar este produto!</p>
+          <div className="mb-10">
+            <h2 className="text-xl text-[#333] mb-5">Avaliações dos Clientes</h2>
+            <div className="bg-[#F8F9FA] p-[30px] rounded-xl text-center">
+              <div className="text-5xl mb-2.5">⭐</div>
+              <p className="text-lg text-[#666]">Nenhuma avaliação ainda.</p>
+              <p className="text-[#999] mb-5">Seja o primeiro a avaliar este produto!</p>
               <button 
                 onClick={() => alert('Avaliar produto')}
-                style={{
-                  background: '#0054A6',
-                  color: '#FFFFFF',
-                  border: 'none',
-                  padding: '12px 30px',
-                  borderRadius: '8px',
-                  cursor: 'pointer',
-                  fontWeight: 'bold'
-                }}
+                className="bg-[#0054A6] text-white border-none px-[30px] py-3 rounded-lg cursor-pointer font-bold hover:bg-[#003D7A]"
               >
                 Avaliar Produto
               </button>
@@ -615,39 +399,21 @@ const ProductDetail = ({ ...props }) => {
         )}
 
         {/* Produtos Relacionados */}
-        <div style={{ marginTop: '40px', paddingTop: '40px', borderTop: '2px solid #F0F0F0' }}>
-          <h2 style={{ fontSize: '22px', color: '#333333', marginBottom: '25px' }}>Quem viu este produto também viu</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px' }}>
-            {[
-              { name: 'RTX 4060 Ti', price: '2.599,90' },
-              { name: 'RTX 4080 Super', price: '5.999,90' },
-              { name: 'RX 7800 XT', price: '3.299,90' },
-              { name: 'RTX 4090', price: '10.999,90' }
-            ].map((product, index) => (
-              <div key={index} style={{ 
-                border: '1px solid #E0E0E0', 
-                borderRadius: '12px', 
-                padding: '20px', 
-                textAlign: 'center', 
-                cursor: 'pointer',
-                transition: 'box-shadow 0.3s, transform 0.3s'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.1)';
-                e.currentTarget.style.transform = 'translateY(-5px)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.boxShadow = 'none';
-                e.currentTarget.style.transform = 'translateY(0)';
-              }}
+        <div className="mt-10 pt-10 border-t-2 border-[#F0F0F0]">
+          <h2 className="text-[22px] text-[#333] mb-6">Quem viu este produto também viu</h2>
+          <div className="grid grid-cols-4 gap-5">
+            {relatedProducts.map((product, index) => (
+              <div 
+                key={index} 
+                className="border border-[#E0E0E0] rounded-xl p-5 text-center cursor-pointer transition-all hover:shadow-[0_8px_25px_rgba(0,0,0,0.1)] hover:-translate-y-1"
               >
                 <img 
                   src={`https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbh-9TjFWygGftURFCV5XVbj7Gh5uEF-gBOw&s=${product.name}`}
                   alt={product.name}
-                  style={{ width: '100%', aspectRatio: '1', objectFit: 'cover', borderRadius: '8px', marginBottom: '15px' }}
+                  className="w-full aspect-square object-cover rounded-lg mb-4"
                 />
-                <div style={{ fontSize: '14px', color: '#333333', marginBottom: '8px', fontWeight: 500 }}>{product.name}</div>
-                <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#0054A6' }}>R$ {product.price}</div>
+                <div className="text-sm text-[#333] mb-2 font-medium">{product.name}</div>
+                <div className="text-lg font-bold text-[#0054A6]">R$ {product.price}</div>
               </div>
             ))}
           </div>
