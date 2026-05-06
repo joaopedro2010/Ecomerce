@@ -9,7 +9,7 @@ export async function getProducts() {
   }
 }
 
-export async function getProductById(id:string) {
+export async function getProductById(id:number) {
   const response = await fetch(`https://api.escuelajs.co/api/v1/products/${id}`);
   return await response.json();
 }
