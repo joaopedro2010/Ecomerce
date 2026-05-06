@@ -13,7 +13,7 @@ const HomePage = () => {
 
  const categorias = [
    {
-     nome: 'Computadores',
+     nome: 'Computador',
      imagem: 'https://www.meupositivo.com.br/panoramapositivo/wp-content/uploads/2023/02/computador-positivo-%C3%A9-bom.jpeg',
      link: '/categoria/computadores'
    },
