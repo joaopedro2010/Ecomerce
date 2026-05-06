@@ -40,7 +40,7 @@ const Cart = ({ ...props }) => {
   return (
     <div {...props} style={{ backgroundColor: '#FFFFFF', minHeight: '100vh', fontFamily: 'Arial, sans-serif' }}>
       
-      {/* HEADER IGUAL AO SEU */}
+      
       <div style={{ backgroundColor: '#0054A6', padding: '15px 0' }}>
         <div style={{ 
           maxWidth: '1200px', 
@@ -67,7 +67,7 @@ const Cart = ({ ...props }) => {
         ) : (
           <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '30px' }}>
             
-            {/* LISTA DE PRODUTOS */}
+           
             <div>
               {cartItems.map(item => (
                 <div key={item.id} style={{
