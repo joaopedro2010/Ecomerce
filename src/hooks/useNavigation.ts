@@ -6,7 +6,7 @@ export function useAppNavigation() {
   return {
     goToHome: () => navigate('/'),
     goToCart: () => navigate('/cart'),
-    goToProduct: (id:string) => navigate(`/product/${id}`),
+    goToProduct: (id: string | number) => navigate(`/product/${id}`),
     goToCheckout: () => navigate('/checkout'),
     goBack: () => navigate(-1),
   };

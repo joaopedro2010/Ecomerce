@@ -1,33 +1,30 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { useState } from 'react';
-import Home from './pages/Home';
-import ProductDetail from './pages/ProductDetail';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { CategoryNav } from './components/CategoryNav';
+import { Footer } from './components/Footer';
+import { Header } from './components/Header';
+import { StoreProvider } from './context/StoreContext';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
-import { StoreProvider } from './context/StoreContext';
+import Home from './pages/Home';
+import ProductDetail from './pages/ProductDetail';
 
 function App() {
-  const [cart, setCart] = useState([]);
-
-  // Função para adicionar ao carrinho (será passada via props)
-  const addToCart = (product) => {
-    setCart([...cart, product]);
-    alert("Produto adicionado!");
-  };
-
   return (
     <StoreProvider>
       <BrowserRouter>
-        {/* O Header/Navbar fixo pode vir aqui */}
-        <Routes>
-          <Route path="/" element={<Home onAdd={addToCart} />} />
-          <Route path="/product/:id" element={<ProductDetail onAdd={addToCart} />} />
-          <Route path="/cart" element={<Cart items={cart} />} />
-          <Route path="/checkout" element={<Checkout items={cart} />} />
-        </Routes>
+        <div className="flex min-h-screen flex-col bg-white font-sans text-[#333]">
+          <Header />
+          <CategoryNav />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/product/:id" element={<ProductDetail />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/checkout" element={<Checkout />} />
+          </Routes>
+          <Footer />
+        </div>
       </BrowserRouter>
     </StoreProvider>
-
   );
 }
 

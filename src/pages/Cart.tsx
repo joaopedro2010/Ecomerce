@@ -1,193 +1,101 @@
-import { useState } from 'react';
+import { useAppNavigation } from '../hooks/useNavigation';
+import { useStore } from '../hooks/useStore';
+import { formatCurrency, getProductImage } from '../utils/product';
 
-const Cart = ({ ...props }) => {
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: 'RTX 4070 Super',
-      price: 3399.90,
-      quantity: 1,
-      image: 'https://static.gigabyte.com/StaticFile/Image/Global/6411fd17d56df91d54c2d9dde57f9c4a/ProductRemoveBg/39176'
-    },
-    {
-      id: 2,
-      name: 'RTX 4060 Ti',
-      price: 2599.90,
-      quantity: 1,
-      image: 'https://storage-asset.msi.com/global/picture/product/product_1684388309f60246f6be0d4cac5d4beb1106192066.webp'
-    }
-  ]);
+const Cart = () => {
+  const { cart, subtotal, removeFromCart, updateCartQuantity } = useStore();
+  const navigation = useAppNavigation();
 
-  const updateQuantity = (id, amount) => {
-    setCartItems(items =>
-      items.map(item =>
-        item.id === id
-          ? { ...item, quantity: Math.max(1, item.quantity + amount) }
-          : item
-      )
+  if (cart.length === 0) {
+    return (
+      <main className="mx-auto w-full max-w-[900px] flex-1 px-5 py-10 text-center">
+        <h1 className="text-2xl font-bold text-[#333]">Carrinho vazio</h1>
+        <p className="mt-2 text-[#666]">Escolha um produto para comprar.</p>
+        <button
+          type="button"
+          onClick={navigation.goToHome}
+          className="mt-6 rounded-lg bg-[#0054A6] px-6 py-3 font-bold text-white"
+        >
+          Ver produtos
+        </button>
+      </main>
     );
-  };
-
-  const removeItem = (id) => {
-    setCartItems(items => items.filter(item => item.id !== id));
-  };
-
-  const total = cartItems.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0
-  );
+  }
 
   return (
-    <div {...props} style={{ backgroundColor: '#FFFFFF', minHeight: '100vh', fontFamily: 'Arial, sans-serif' }}>
-      
-      
-      <div style={{ backgroundColor: '#0054A6', padding: '15px 0' }}>
-        <div style={{ 
-          maxWidth: '1200px', 
-          margin: '0 auto', 
-          padding: '0 20px',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          color: '#FFF'
-        }}>
-          <h1 style={{ margin: 0 }}>FuFuni</h1>
-          <span>Carrinho de Compras</span>
-        </div>
-      </div>
+    <main className="mx-auto w-full max-w-[1000px] flex-1 px-5 py-8">
+      <h1 className="mb-6 text-2xl font-bold text-[#333]">Carrinho</h1>
 
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '30px 20px' }}>
-        
-        <h2 style={{ marginBottom: '20px' }}>Seu Carrinho</h2>
+      <section className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_300px]">
+        <div className="space-y-4">
+          {cart.map((item) => (
+            <article
+              key={item.product.id}
+              className="flex flex-col gap-4 rounded-xl border border-[#E0E0E0] bg-[#FAFAFA] p-4 sm:flex-row sm:items-center"
+            >
+              <img
+                src={getProductImage(item.product)}
+                alt={item.product.title}
+                onError={(event) => {
+                  event.currentTarget.src = '/fufuni.png';
+                }}
+                className="h-24 w-24 rounded-lg object-cover"
+              />
 
-        {cartItems.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '40px', color: '#666' }}>
-            Seu carrinho está vazio.
-          </div>
-        ) : (
-          <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '30px' }}>
-            
-           
-            <div>
-              {cartItems.map(item => (
-                <div key={item.id} style={{
-                  display: 'flex',
-                  gap: '20px',
-                  padding: '20px',
-                  border: '1px solid #E0E0E0',
-                  borderRadius: '12px',
-                  marginBottom: '15px',
-                  alignItems: 'center',
-                  background: '#FAFAFA'
-                }}>
-                  
-                  <img 
-                    src={item.image} 
-                    alt={item.name}
-                    style={{ width: '100px', borderRadius: '8px' }} 
-                  />
+              <div className="flex-1">
+                <h2 className="font-bold text-[#333]">{item.product.title}</h2>
+                <p className="text-[#0054A6]">{formatCurrency(item.product.price)}</p>
 
-                  <div style={{ flex: 1 }}>
-                    <h3 style={{ margin: 0 }}>{item.name}</h3>
-                    <p style={{ color: '#666', margin: '5px 0' }}>
-                      R$ {item.price.toFixed(2)}
-                    </p>
-
-                    {/* CONTROLE DE QUANTIDADE */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '10px' }}>
-                      <button 
-                        onClick={() => updateQuantity(item.id, -1)}
-                        style={{
-                          padding: '5px 10px',
-                          border: '1px solid #CCC',
-                          background: '#FFF',
-                          cursor: 'pointer'
-                        }}
-                      >-</button>
-
-                      <span>{item.quantity}</span>
-
-                      <button 
-                        onClick={() => updateQuantity(item.id, 1)}
-                        style={{
-                          padding: '5px 10px',
-                          border: '1px solid #CCC',
-                          background: '#FFF',
-                          cursor: 'pointer'
-                        }}
-                      >+</button>
-                    </div>
-                  </div>
-
-                  {/* REMOVER */}
-                  <button 
-                    onClick={() => removeItem(item.id)}
-                    style={{
-                      background: '#FF6500',
-                      color: '#FFF',
-                      border: 'none',
-                      padding: '10px 15px',
-                      borderRadius: '8px',
-                      cursor: 'pointer'
-                    }}
+                <div className="mt-3 flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() =>
+                      updateCartQuantity(item.product.id, item.quantity - 1)
+                    }
+                    className="h-8 w-8 rounded border border-[#CCC] bg-white"
                   >
-                    Remover
+                    -
                   </button>
-                </div>
-              ))}
-            </div>
-
-            {/* RESUMO */}
-            <div style={{
-              background: '#F8F9FA',
-              padding: '25px',
-              borderRadius: '12px',
-              height: 'fit-content',
-              border: '1px solid #E0E0E0'
-            }}>
-              <h3>Resumo do Pedido</h3>
-
-              <div style={{ margin: '20px 0' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
-                  <span>Subtotal</span>
-                  <span>R$ {total.toFixed(2)}</span>
-                </div>
-
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
-                  <span>Frete</span>
-                  <span>Grátis</span>
-                </div>
-
-                <hr />
-
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold', fontSize: '18px' }}>
-                  <span>Total</span>
-                  <span style={{ color: '#0054A6' }}>
-                    R$ {total.toFixed(2)}
-                  </span>
+                  <span className="w-8 text-center font-bold">{item.quantity}</span>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      updateCartQuantity(item.product.id, item.quantity + 1)
+                    }
+                    className="h-8 w-8 rounded border border-[#CCC] bg-white"
+                  >
+                    +
+                  </button>
                 </div>
               </div>
 
-              <button style={{
-                width: '100%',
-                padding: '15px',
-                background: '#0054A6',
-                color: '#FFF',
-                border: 'none',
-                borderRadius: '10px',
-                fontSize: '18px',
-                fontWeight: 'bold',
-                cursor: 'pointer',
-                fontSizeAdjust: '-moz-initial' 
-              }}>
-                Finalizar Compra
+              <button
+                type="button"
+                onClick={() => removeFromCart(item.product.id)}
+                className="rounded-lg bg-[#FF6500] px-4 py-2 font-bold text-white"
+              >
+                Remover
               </button>
-            </div>
+            </article>
+          ))}
+        </div>
 
+        <aside className="h-fit rounded-xl border border-[#E0E0E0] bg-white p-5 shadow-md">
+          <h2 className="mb-4 text-xl font-bold text-[#333]">Resumo</h2>
+          <div className="mb-4 flex justify-between">
+            <span>Total</span>
+            <strong className="text-[#0054A6]">{formatCurrency(subtotal)}</strong>
           </div>
-        )}
-      </div>
-    </div>
+          <button
+            type="button"
+            onClick={navigation.goToCheckout}
+            className="w-full rounded-lg bg-[#0054A6] px-4 py-3 font-bold text-white"
+          >
+            Ir para checkout
+          </button>
+        </aside>
+      </section>
+    </main>
   );
 };
 
