@@ -1,10 +1,11 @@
 import type { Product } from '../types';
 
-const API_URL = 'https://api.escuelajs.co/api/v1';
+const API_URL = 'https://api.escuelajs.co/api/v1/products/?categoryId=2';
 
 export async function getProducts(): Promise<Product[]> {
   try {
-    const response = await fetch(`${API_URL}/products`);
+    const response = await fetch(`${API_URL}`);
+
 
     if (!response.ok) {
       throw new Error(`Erro HTTP ${response.status}`);
