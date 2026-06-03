@@ -121,9 +121,6 @@ const ProductDetail = () => {
         </div>
 
         <div className="flex flex-col gap-4">
-          <p className="text-sm font-bold uppercase text-[#0054A6]">
-            {product.category?.name ?? 'Produto'}
-          </p>
           <h1 className="text-3xl font-bold text-[#333]">{product.title}</h1>
 
           <div className="rounded-xl bg-[#F8F9FA] p-4">
@@ -144,7 +141,6 @@ const ProductDetail = () => {
             <h2 className="mb-3 text-lg font-bold text-[#333]">Informacoes</h2>
             <ul className="space-y-2 p-0 text-sm text-[#666]">
               <li>Vendido por FuFuni</li>
-              <li>Produto da categoria {product.category?.name ?? 'Tecnologia'}</li>
               <li>Compra simulada para o projeto</li>
             </ul>
           </div>
